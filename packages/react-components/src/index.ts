@@ -1,0 +1,36 @@
+/**
+ * React Component Library
+ * Uses shared tokens from @acme/tokens
+ */
+
+// Components
+export { Button } from './components/Button';
+export type { ButtonProps } from './components/Button';
+
+export { Input } from './components/Input';
+export type { InputProps } from './components/Input';
+
+export { Card, CardHeader, CardBody, CardFooter } from './components/Card';
+export type { CardProps } from './components/Card';
+
+export { Badge } from './components/Badge';
+export type { BadgeProps } from './components/Badge';
+
+export { Avatar } from './components/Avatar';
+export type { AvatarProps } from './components/Avatar';
+
+export { Modal } from './components/Modal';
+export type { ModalProps } from './components/Modal';
+
+export { Spinner } from './components/Spinner';
+export type { SpinnerProps } from './components/Spinner';
+
+export { Alert } from './components/Alert';
+export type { AlertProps } from './components/Alert';
+
+// Hooks
+export { useToggle } from './hooks/useToggle';
+export { useClickOutside } from './hooks/useClickOutside';
+
+// NOTE: React uses "variant" prop for Button styling
+// This differs from Vue which uses "type" prop
