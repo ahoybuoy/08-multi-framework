@@ -7,6 +7,7 @@ export interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   loading?: boolean;
+  loadingText?: string;
   fullWidth?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -47,6 +48,7 @@ export const Button: React.FC<ButtonProps> = ({
   size = 'md',
   disabled = false,
   loading = false,
+  loadingText,
   fullWidth = false,
   leftIcon,
   rightIcon,
@@ -68,13 +70,14 @@ export const Button: React.FC<ButtonProps> = ({
     lineHeight: 1.5,
     borderRadius: borderRadius.md,
     cursor: disabled || loading ? 'not-allowed' : 'pointer',
-    opacity: disabled ? 0.5 : 1,
+    opacity: disabled ? 0.5 : loading ? 0.75 : 1,
     transition: `all ${transitions.duration.fast} ${transitions.timing.ease}`,
     width: fullWidth ? '100%' : 'auto',
     backgroundColor: variantStyle.background,
     color: variantStyle.color,
     border: variantStyle.border,
     boxShadow: variant === 'primary' ? shadows.sm : 'none',
+    position: 'relative',
   };
 
   return (
@@ -83,33 +86,49 @@ export const Button: React.FC<ButtonProps> = ({
       style={style}
       disabled={disabled || loading}
       onClick={onClick}
+      aria-busy={loading}
     >
-      {loading && <Spinner />}
-      {!loading && leftIcon}
-      {children}
-      {!loading && rightIcon}
+      {loading && <Spinner size={size} />}
+      {loading && loadingText ? (
+        <span>{loadingText}</span>
+      ) : (
+        <>
+          {!loading && leftIcon}
+          <span style={{ opacity: loading && !loadingText ? 0 : 1 }}>{children}</span>
+          {!loading && rightIcon}
+        </>
+      )}
     </button>
   );
 };
 
-const Spinner: React.FC = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    style={{ animation: 'spin 1s linear infinite' }}
-  >
-    <circle
-      cx="8"
-      cy="8"
-      r="6"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeDasharray="32"
-      strokeDashoffset="12"
-    />
-  </svg>
-);
+interface SpinnerProps {
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const spinnerSizes = { sm: 14, md: 16, lg: 20 };
+
+const Spinner: React.FC<SpinnerProps> = ({ size = 'md' }) => {
+  const s = spinnerSizes[size];
+  return (
+    <svg
+      width={s}
+      height={s}
+      viewBox="0 0 16 16"
+      fill="none"
+      style={{ animation: 'spin 1s linear infinite' }}
+    >
+      <circle
+        cx="8"
+        cy="8"
+        r="6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeDasharray="32"
+        strokeDashoffset="12"
+      />
+    </svg>
+  );
+};
 
 export default Button;
