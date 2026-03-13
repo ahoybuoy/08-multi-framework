@@ -1,0 +1,6 @@
+drift:
+  ignore:
+    - type: hardcoded-color
+      file: packages/react-components/src/components/Alert.tsx
+      value: "#D1FAE5"
+      reason: Lame
