@@ -4,3 +4,7 @@ drift:
       file: packages/react-components/src/components/Alert.tsx
       value: "#D1FAE5"
       reason: Lame
+    - type: inline-style
+      file: packages/vue-components/src/components/AcmeAlert.vue
+      value: closeButtonStyle
+      reason: its not a big deal
